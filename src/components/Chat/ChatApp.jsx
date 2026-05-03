@@ -21,7 +21,6 @@ const ChatApp = () => {
   };
 
   useEffect(() => {
-    // Initialize Peer with persistent short ID
     let savedId = localStorage.getItem('vault_peer_id');
     if (!savedId) {
       savedId = generateShortId();
@@ -29,7 +28,7 @@ const ChatApp = () => {
     }
     
     const newPeer = new Peer(savedId, {
-      debug: 1, // Reduced logging for faster performance
+      debug: 1, 
       config: {
         iceServers: [
           { urls: 'stun:stun.l.google.com:19302' },
@@ -65,7 +64,7 @@ const ChatApp = () => {
 
   const setupConnection = (conn) => {
     conn.on('data', (data) => {
-      if (data.type === 'ping') return; // Ignore pings
+      if (data.type === 'ping') return; 
       if (data.type === 'message') {
         updateMessages(conn.peer, { text: data.text, type: 'text' }, 'them');
       } else if (data.type === 'file') {
@@ -164,7 +163,7 @@ const ChatApp = () => {
   const connectToPeer = (peerId) => {
     if (!peer || !peerId.trim() || peerId === myPeerId) return;
     
-    // Check if already connected
+    
     if (connections.current[peerId] && connections.current[peerId].open) {
       const existingChat = chats.find(c => c.id === peerId);
       if (existingChat) setActiveChat(existingChat);
@@ -174,7 +173,7 @@ const ChatApp = () => {
     const conn = peer.connect(peerId);
     setupConnection(conn);
     
-    // Optimistically add chat and select it
+    
     addChatIfNew(peerId);
     const newChat = {
       id: peerId,
@@ -191,32 +190,19 @@ const ChatApp = () => {
     if (!activeChat) return;
     setCallType(type);
     setShowCall(true);
-    
-    updateMessages(activeChat.id, { 
-      text: `Outgoing ${type} call`, 
-      type: 'call',
-      callType: type,
-      status: 'outgoing'
-    }, 'me');
   };
 
-  // Log incoming call when it arrives
+  
   useEffect(() => {
     if (incomingCall) {
       const peerId = incomingCall.peer;
       const type = incomingCall.metadata?.type || 'video'; // Default to video if unknown
       setCallType(type);
       addChatIfNew(peerId);
-      updateMessages(peerId, { 
-        text: `Incoming ${type} call`, 
-        type: 'call',
-        callType: type,
-        status: 'incoming'
-      }, 'them');
     }
   }, [incomingCall]);
 
-  // Sync activeChat when chats update
+  
   useEffect(() => {
     if (activeChat) {
       const updated = chats.find(c => c.id === activeChat.id);
