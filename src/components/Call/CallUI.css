@@ -283,8 +283,52 @@
 }
 
 @media (max-width: 768px) {
-  .call-container { border-radius: 0; }
-  .local-view { width: 120px; top: 1rem; right: 1rem; }
-  .call-controls { gap: 1rem; padding: 1rem; }
-  .control-btn { width: 50px; height: 50px; font-size: 1.2rem; }
+  .call-container { 
+    border-radius: 0; 
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+  .local-view { 
+    width: 110px; 
+    aspect-ratio: 9/16;
+    top: auto;
+    bottom: 9rem; 
+    right: 1.5rem; 
+    border-radius: 12px;
+  }
+  .call-controls { 
+    width: 90%;
+    bottom: 2rem;
+    gap: 0.8rem; 
+    padding: 0.8rem; 
+  }
+  .control-btn { 
+    width: 55px; 
+    height: 55px; 
+    font-size: 1.4rem; 
+  }
+  .ios-incoming-screen {
+    padding: 3rem 1.5rem 4rem;
+  }
+}
+
+/* Tablet Optimization */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .call-container {
+    max-width: 95vw;
+    max-height: 85vh;
+  }
+  .local-view {
+    width: 150px;
+    top: 2rem;
+    right: 2rem;
+  }
+}
+
+/* Desktop/Laptop */
+@media (min-width: 1025px) {
+  .call-container {
+    max-width: 1000px;
+    max-height: 650px;
+  }
 }
