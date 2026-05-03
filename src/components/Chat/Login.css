@@ -1,0 +1,167 @@
+.login-screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  background: var(--bg-primary);
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.back-btn {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 100;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.back-btn:hover {
+  color: var(--text-primary);
+  transform: scale(1.1);
+}
+
+.vault-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 10px var(--accent-glow));
+}
+
+.login-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.login-header p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.input-group input {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.login-submit {
+  margin-top: 1rem;
+  background: var(--accent);
+  color: var(--bg-primary);
+  padding: 1rem;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.login-submit:hover {
+  background: var(--accent-dim);
+  transform: translateY(-2px);
+}
+
+.login-error {
+  color: var(--red);
+  font-size: 0.85rem;
+  text-align: center;
+  background: rgba(255, 77, 106, 0.1);
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 77, 106, 0.2);
+}
+
+.login-success {
+  color: var(--accent);
+  font-size: 0.85rem;
+  text-align: center;
+  background: rgba(0, 229, 160, 0.1);
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 229, 160, 0.2);
+}
+
+.mode-toggle {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.mode-toggle p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.mode-toggle span {
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.mode-toggle span:hover {
+  text-decoration: underline;
+}
+
+.login-footer {
+  margin-top: auto;
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+.login-footer p {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.login-footer p::before {
+  content: '🔒';
+}
