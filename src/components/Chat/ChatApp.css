@@ -161,9 +161,27 @@
 .status-dot.offline { background: var(--text-muted); }
 
 .chat-info { flex: 1; overflow: hidden; }
-.chat-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.chat-header { display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center; }
+.chat-header-right { display: flex; align-items: center; gap: 0.5rem; }
 .chat-name { font-weight: 600; color: var(--text-primary); }
 .chat-time { font-size: 0.75rem; color: var(--text-muted); }
+
+.delete-chat-btn {
+  background: transparent;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  padding: 4px;
+}
+
+.chat-item:hover .delete-chat-btn {
+  opacity: 0.6;
+}
+
+.delete-chat-btn:hover {
+  opacity: 1 !important;
+  transform: scale(1.2);
+}
 .chat-preview { display: flex; justify-content: space-between; align-items: center; }
 .last-msg { font-size: 0.85rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .unread-badge { background: var(--accent); color: var(--bg-primary); font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 10px; }

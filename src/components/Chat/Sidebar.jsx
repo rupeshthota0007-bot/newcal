@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Sidebar = ({ chats, activeChat, onSelectChat, myPeerId, onConnect }) => {
+const Sidebar = ({ chats, activeChat, onSelectChat, onDeleteChat, myPeerId, onConnect }) => {
   const [search, setSearch] = useState('');
   const [targetId, setTargetId] = useState('');
 
@@ -86,7 +86,19 @@ const Sidebar = ({ chats, activeChat, onSelectChat, myPeerId, onConnect }) => {
               <div className="chat-info">
                 <div className="chat-header">
                   <span className="chat-name">{chat.name}</span>
-                  <span className="chat-time">{chat.timestamp}</span>
+                  <div className="chat-header-right">
+                    <span className="chat-time">{chat.timestamp}</span>
+                    <button 
+                      className="delete-chat-btn" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDeleteChat(chat.id);
+                      }}
+                      title="Delete Chat"
+                    >
+                      🗑️
+                    </button>
+                  </div>
                 </div>
                 <div className="chat-preview">
                   <p className="last-msg">{chat.lastMessage}</p>

@@ -17,14 +17,18 @@ const ChatApp = () => {
   const connections = useRef({});
 
   useEffect(() => {
-    // Initialize Peer
-    const newPeer = new Peer({
-      debug: 3,
+    // Initialize Peer with persistent ID for faster reconnection
+    const savedId = localStorage.getItem('vault_peer_id');
+    const newPeer = new Peer(savedId || undefined, {
+      debug: 1, // Reduced logging for faster performance
       config: {
         iceServers: [
           { urls: 'stun:stun.l.google.com:19302' },
           { urls: 'stun:stun1.l.google.com:19302' },
           { urls: 'stun:stun2.l.google.com:19302' },
+          { urls: 'stun:stun3.l.google.com:19302' },
+          { urls: 'stun:stun4.l.google.com:19302' },
+          { urls: 'stun:stun.services.mozilla.com' }
         ],
         sdpSemantics: 'unified-plan'
       }
@@ -32,6 +36,7 @@ const ChatApp = () => {
     
     newPeer.on('open', (id) => {
       setMyPeerId(id);
+      localStorage.setItem('vault_peer_id', id);
     });
 
     newPeer.on('connection', (conn) => {
@@ -51,6 +56,7 @@ const ChatApp = () => {
 
   const setupConnection = (conn) => {
     conn.on('data', (data) => {
+      if (data.type === 'ping') return; // Ignore pings
       if (data.type === 'message') {
         updateMessages(conn.peer, { text: data.text, type: 'text' }, 'them');
       } else if (data.type === 'file') {
@@ -68,6 +74,13 @@ const ChatApp = () => {
       connections.current[conn.peer] = conn;
       addChatIfNew(conn.peer);
       updateMessages(conn.peer, { text: 'You are now connected securely.', type: 'system' }, 'system');
+      
+      // Heartbeat to keep connection fast
+      const heartbeat = setInterval(() => {
+        if (conn.open) conn.send({ type: 'ping' });
+      }, 15000);
+
+      conn.on('close', () => clearInterval(heartbeat));
     });
   };
 
@@ -202,12 +215,26 @@ const ChatApp = () => {
     }
   }, [chats]);
 
+  const deleteChat = (peerId) => {
+    if (window.confirm('Are you sure you want to delete this chat?')) {
+      setChats(prev => prev.filter(c => c.id !== peerId));
+      if (activeChat && activeChat.id === peerId) {
+        setActiveChat(null);
+      }
+      if (connections.current[peerId]) {
+        connections.current[peerId].close();
+        delete connections.current[peerId];
+      }
+    }
+  };
+
   return (
     <div className={`chat-app-container ${activeChat ? 'showing-chat' : ''}`}>
       <Sidebar 
         chats={chats} 
         activeChat={activeChat} 
         onSelectChat={setActiveChat}
+        onDeleteChat={deleteChat}
         myPeerId={myPeerId}
         onConnect={connectToPeer}
       />
