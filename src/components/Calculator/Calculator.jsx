@@ -32,7 +32,6 @@ const Calculator = ({ onSecretCode }) => {
           .replace(/÷/g, '/')
           .replace(/−/g, '-');
         
-        // Safety check for math expressions only
         if (/^[0-9+\-*/().\s%]+$/.test(formula)) {
           const result = Function('"use strict"; return (' + formula + ')')();
           setDisplay(String(result));
@@ -85,8 +84,8 @@ const Calculator = ({ onSecretCode }) => {
           <div className="current-value">{display}</div>
         </div>
         <div className="calculator-buttons">
-          <button className="calc-btn function" onClick={() => handleButtonClick('AC')}>C</button>
-          <button className="calc-btn function" onClick={() => handleButtonClick('DEL')}>⌫</button>
+          <button className="calc-btn function" onClick={() => handleButtonClick('AC')}>AC</button>
+          <button className="calc-btn function" onClick={() => handleButtonClick('+/-')}>+/-</button>
           <button className="calc-btn function" onClick={() => handleButtonClick('%')}>%</button>
           <button className="calc-btn operator" onClick={() => handleButtonClick('÷')}>÷</button>
 
@@ -98,16 +97,16 @@ const Calculator = ({ onSecretCode }) => {
           <button className="calc-btn number" onClick={() => handleButtonClick('4')}>4</button>
           <button className="calc-btn number" onClick={() => handleButtonClick('5')}>5</button>
           <button className="calc-btn number" onClick={() => handleButtonClick('6')}>6</button>
-          <button className="calc-btn operator" onClick={() => handleButtonClick('−')}>-</button>
+          <button className="calc-btn operator" onClick={() => handleButtonClick('−')}>−</button>
 
           <button className="calc-btn number" onClick={() => handleButtonClick('1')}>1</button>
           <button className="calc-btn number" onClick={() => handleButtonClick('2')}>2</button>
           <button className="calc-btn number" onClick={() => handleButtonClick('3')}>3</button>
           <button className="calc-btn operator" onClick={() => handleButtonClick('+')}>+</button>
 
-          <button className="calc-btn number" onClick={() => handleButtonClick('0')}>0</button>
+          <button className="calc-btn number zero" onClick={() => handleButtonClick('0')}>0</button>
           <button className="calc-btn number" onClick={() => handleButtonClick('.')}>.</button>
-          <button className="calc-btn operator primary" onClick={() => handleButtonClick('=')}>=</button>
+          <button className="calc-btn operator" onClick={() => handleButtonClick('=')}>=</button>
         </div>
       </div>
     </div>

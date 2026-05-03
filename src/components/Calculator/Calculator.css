@@ -1,7 +1,7 @@
 :root {
   --calc-bg: #0b0e11;
-  --calc-btn: #1a1d21;
-  --calc-accent: #2ecc71;
+  --calc-btn: #1e2227;
+  --calc-accent: #00e5a0;
   --calc-text: #ffffff;
 }
 
@@ -15,75 +15,82 @@
 
 .calculator-card {
   width: 100%;
-  max-width: 380px;
-  background: transparent;
-  padding: 1rem;
+  max-width: 400px;
+  background: var(--calc-btn);
+  padding: 1.5rem;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .calc-display {
-  padding: 2rem 1rem;
+  background: rgba(0,0,0,0.2);
+  padding: 1.5rem;
+  border-radius: 16px;
   text-align: right;
-  min-height: 180px;
+  min-height: 120px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  gap: 0.5rem;
 }
 
 .equation {
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   color: #888;
-  min-height: 1.5rem;
+  min-height: 1.2rem;
 }
 
 .current-value {
-  font-size: 5rem;
-  font-weight: 300;
-  color: white;
+  font-size: 2.8rem;
+  font-weight: 600;
+  color: var(--calc-text);
+  overflow: hidden;
 }
 
 .calculator-buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+  gap: 12px;
 }
 
 .calc-btn {
   aspect-ratio: 1;
-  border-radius: 50%;
+  border-radius: 16px;
   border: none;
-  background: #262a2f;
+  background: #2a2f36;
   color: white;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: filter 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: all 0.2s;
 }
 
-.calc-btn:active {
-  filter: brightness(1.5);
+.calc-btn:hover {
+  background: #3a3f47;
+  transform: translateY(-2px);
 }
 
-.calc-btn.function, .calc-btn.operator {
-  background: #1a2d24;
+.calc-btn.operator {
+  background: rgba(0, 229, 160, 0.1);
   color: var(--calc-accent);
 }
 
-.calc-btn.primary {
-  background: var(--calc-accent) !important;
-  color: #0b0e11 !important;
+.calc-btn.function {
+  color: #ff4d6a;
 }
 
-/* Mobile Responsiveness for Calculator */
+.calc-btn.zero {
+  grid-column: span 2;
+  aspect-ratio: unset;
+}
+
 @media (max-width: 480px) {
   .calculator-card {
     max-width: 100%;
     height: 100%;
-    justify-content: flex-end;
-    padding-bottom: 3rem;
+    border-radius: 0;
   }
 }
