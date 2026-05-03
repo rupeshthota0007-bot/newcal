@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import Calculator from './components/Calculator/Calculator'
 import ChatApp from './components/Chat/ChatApp'
+import Login from './components/Chat/Login'
 export default function App() {
   const [view, setView] = useState('calc')
   const [isUnlocked, setIsUnlocked] = useState(false)
