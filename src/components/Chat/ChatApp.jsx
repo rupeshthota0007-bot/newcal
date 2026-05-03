@@ -16,10 +16,19 @@ const ChatApp = () => {
   
   const connections = useRef({});
 
+  const generateShortId = () => {
+    return Math.floor(10000000 + Math.random() * 90000000).toString();
+  };
+
   useEffect(() => {
-    // Initialize Peer with persistent ID for faster reconnection
-    const savedId = localStorage.getItem('vault_peer_id');
-    const newPeer = new Peer(savedId || undefined, {
+    // Initialize Peer with persistent short ID
+    let savedId = localStorage.getItem('vault_peer_id');
+    if (!savedId) {
+      savedId = generateShortId();
+      localStorage.setItem('vault_peer_id', savedId);
+    }
+    
+    const newPeer = new Peer(savedId, {
       debug: 1, // Reduced logging for faster performance
       config: {
         iceServers: [
