@@ -2,111 +2,94 @@ import { useState } from 'react';
 import './Login.css';
 
 const Login = ({ onLogin, onCancel }) => {
-  const [mode, setMode] = useState('login'); // 'login' or 'register'
-  const [loginId, setLoginId] = useState('');
-  const [passcode, setPasscode] = useState('');
-  const [name, setName] = useState('');
+  const [isRegister, setIsRegister] = useState(true);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const storedUsers = JSON.parse(localStorage.getItem('vault_users') || '[]');
+    const users = JSON.parse(localStorage.getItem('vault_users') || '[]');
 
-    if (mode === 'register') {
-      if (!name || !loginId || !passcode) {
-        setError('All fields are required');
+    if (isRegister) {
+      if (users.find(u => u.username === username)) {
+        setError('Username already exists');
         return;
       }
-      if (storedUsers.find(u => u.id === loginId)) {
-        setError('Login ID already exists');
-        return;
-      }
-      
-      const newUser = { name, id: loginId, passcode };
-      localStorage.setItem('vault_users', JSON.stringify([...storedUsers, newUser]));
-      setSuccess('Registration successful! Please login.');
-      setMode('login');
-      setName('');
-      setPasscode('');
+      users.push({ username, password, email });
+      localStorage.setItem('vault_users', JSON.stringify(users));
+      setIsRegister(false);
       setError('');
-      setTimeout(() => setSuccess(''), 3000);
+      alert('Registration successful! Please login.');
     } else {
-      // Login logic
-      // Include the default admin/1234 for fallback
-      const user = storedUsers.find(u => u.id === loginId && u.passcode === passcode) || 
-                   (loginId === 'admin' && passcode === '1234' ? { name: 'Admin', id: 'admin' } : null);
-
+      const user = users.find(u => u.username === username && u.password === password);
       if (user) {
-        onLogin(user);
+        onLogin(true);
       } else {
-        setError('Invalid credentials');
-        setTimeout(() => setError(''), 2000);
+        setError('Invalid username or password');
       }
     }
   };
 
   return (
-    <div className="login-screen">
-      <div className="login-header">
-        <button className="back-btn" onClick={onCancel}>✕</button>
-        <div className="vault-icon">{mode === 'login' ? '🔐' : '📝'}</div>
-        <h2>{mode === 'login' ? 'Secure Access' : 'Create Vault'}</h2>
-        <p>{mode === 'login' ? 'Please enter your credentials to unlock' : 'Register your secure ID and passcode'}</p>
-      </div>
+    <div className="login-overlay">
+      <div className="login-card">
+        <button className="close-btn" onClick={onCancel}>✕</button>
+        
+        <div className="login-header">
+          <h1>{isRegister ? 'Create Account' : 'Welcome Back'}</h1>
+          <p className="subheading">{isRegister ? 'Secure Channel Registration' : 'Access your private vault'}</p>
+        </div>
 
-      <form className="login-form" onSubmit={handleSubmit}>
-        {mode === 'register' && (
+        {error && <div className="error-banner">{error}</div>}
+
+        <form onSubmit={handleSubmit} className="login-form">
           <div className="input-group">
-            <label>Full Name</label>
+            <span className="input-icon">👤</span>
             <input 
               type="text" 
-              placeholder="Your Name" 
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              autoFocus
+              placeholder={isRegister ? "Choose Username" : "Username"}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
             />
           </div>
-        )}
-        <div className="input-group">
-          <label>Login ID</label>
-          <input 
-            type="text" 
-            placeholder="Enter ID" 
-            value={loginId}
-            onChange={(e) => setLoginId(e.target.value)}
-            autoFocus={mode === 'login'}
-          />
-        </div>
-        <div className="input-group">
-          <label>Passcode</label>
-          <input 
-            type="password" 
-            placeholder="••••" 
-            value={passcode}
-            onChange={(e) => setPasscode(e.target.value)}
-            maxLength={4}
-          />
-        </div>
-        
-        {error && <div className="login-error">{error}</div>}
-        {success && <div className="login-success">{success}</div>}
 
-        <button type="submit" className="login-submit">
-          {mode === 'login' ? 'Unlock Vault' : 'Register Account'}
-        </button>
-
-        <div className="mode-toggle">
-          {mode === 'login' ? (
-            <p>Don't have an account? <span onClick={() => { setMode('register'); setError(''); }}>Register</span></p>
-          ) : (
-            <p>Already have an account? <span onClick={() => { setMode('login'); setError(''); }}>Login</span></p>
+          {isRegister && (
+            <div className="input-group">
+              <span className="input-icon">✉️</span>
+              <input 
+                type="email" 
+                placeholder="Email (Optional)" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
           )}
-        </div>
-      </form>
-      
-      <div className="login-footer">
-        <p>End-to-end encrypted session</p>
+
+          <div className="input-group">
+            <span className="input-icon">🔒</span>
+            <input 
+              type="password" 
+              placeholder={isRegister ? "Choose Password" : "Password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit" className="auth-submit-btn">
+            {isRegister ? 'Register' : 'Login'}
+          </button>
+        </form>
+
+        <p className="auth-toggle">
+          {isRegister ? 'Already registered?' : "Don't have an account?"}{' '}
+          <span onClick={() => setIsRegister(!isRegister)}>
+            {isRegister ? 'Login' : 'Create one'}
+          </span>
+        </p>
       </div>
     </div>
   );
