@@ -69,176 +69,68 @@
   100% { transform: scale(1.5); opacity: 0; }
 }
 
+.remote-view {
+  flex: 1;
+  position: relative;
+  background: #000;
+  width: 100%;
+  height: 100%;
+}
+
 .remote-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .local-view {
   position: absolute;
-  top: 2rem;
-  right: 2rem;
-  width: 180px;
-  aspect-ratio: 16/9;
-  background: #222;
-  border-radius: var(--radius);
+  bottom: 10rem;
+  right: 1.5rem;
+  width: 120px;
+  height: 180px;
+  background: #111;
+  border-radius: 16px;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow: var(--shadow);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   z-index: 20;
 }
 
-.call-container {
+.local-video {
   width: 100%;
   height: 100%;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.ios-incoming-screen {
-  height: 100%;
-  width: 100%;
-  background: #4a2c3a; /* iOS-like dark burgundy */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 4rem 2rem 6rem;
-  color: white;
-}
-
-.caller-info {
-  text-align: center;
-}
-
-.caller-info h1 {
-  font-size: 2.5rem;
-  font-weight: 400;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.caller-info p {
-  font-size: 1.2rem;
-  opacity: 0.7;
-}
-
-.mid-actions {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  max-width: 300px;
-}
-
-.mid-action {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8rem;
-  opacity: 0.9;
-}
-
-.mid-action .icon {
-  font-size: 1.5rem;
-}
-
-.bottom-actions {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  max-width: 350px;
-}
-
-.action-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  font-size: 0.9rem;
-}
-
-.ios-btn {
-  width: 75px;
-  height: 75px;
-  border-radius: 50%;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  cursor: pointer;
-  transition: transform 0.2s;
-  color: white;
-}
-
-.call-timer, .video-timer {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: white;
-  margin-bottom: 1rem;
-}
-
-.video-timer {
-  position: absolute;
-  top: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.5);
-  padding: 0.4rem 1.2rem;
-  border-radius: 20px;
-  z-index: 40;
-  backdrop-filter: blur(5px);
-}
-
-.video-off-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
-  font-size: 0.8rem;
+  object-fit: cover;
 }
 
 .call-controls {
   position: absolute;
-  bottom: 3rem;
+  bottom: 3.5rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 1.2rem;
-  background: rgba(20, 20, 20, 0.85);
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
   padding: 1rem 2rem;
-  border-radius: 50px;
-  backdrop-filter: blur(10px);
+  border-radius: 40px;
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 30;
 }
 
 .control-btn {
-  width: 50px;
-  height: 50px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   background: rgba(255, 255, 255, 0.1);
   color: white;
-}
-
-.control-btn:hover {
-  transform: scale(1.1);
 }
 
 .control-btn.active {
@@ -246,40 +138,24 @@
   color: #111;
 }
 
-.control-btn.speaker {
-  background: white;
-  color: #111;
-}
-
 .control-btn.hangup {
-  background: #ff4d6a;
+  background: #ff3b30; /* iOS Red */
   color: white;
 }
 
-.control-btn.hangup:hover {
-  background: #ff3355;
-}
-
-.video-placeholder {
-  text-align: center;
-}
-
-.video-placeholder img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  margin-bottom: 1rem;
-}
-
-.video-placeholder img.blur {
-  filter: blur(4px);
-  opacity: 0.5;
-}
-
-.status-label {
-  color: var(--accent);
-  font-weight: 600;
-  letter-spacing: 1px;
+.video-timer {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  z-index: 40;
 }
 
 @media (max-width: 768px) {
